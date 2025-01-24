@@ -8,43 +8,33 @@ variables:
 - group: vg
 
 stages:
-  # - stage: Deploy
-  #   displayName: Deploy Stage
-  #   jobs:
-  #     - job: DeployJob
-  #       steps:
-  #         - script: |
-  #             echo "Name: $(name)"
-  #             echo "Age: $(age)"
-  #             echo "Hora: $(hora)"
-  #           displayName: 'Deploy with Variables'
+  - stage: Deploy
+    displayName: Deploy Stage
+    jobs:
+      - job: pubartifacet
+        steps:
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.SourcesDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+
+          - script: ip a
+    
+      
   
   - stage: Directoty 
     displayName: Directoy listing
     jobs:
-      # - job: listing
-      #   steps:
-      #     - script: |
-      #         ls -ll
-      # - job: other
-      #   steps:
-      #     - script: |
-      #         pwd
-      # - job: hora
-      #   steps:
-      #     - script: pwd
-      #       displayName: 'Print Working Directory'
-      # - job: dcscds
-      #   steps:
-      #     - script: ip a
-      #       displayName: 'ipppppppppppppppppppppppppppppp'
-            
-      - job: pubartiface
+      - job: Deploy
         steps:
-          - task: PublishBuildArtifacts@1
+          - task: DownloadBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: 'drop'
-              publishLocation: 'Container'
-      
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: '$(System.ArtifactStagingDirectory)'
+          
+          
+
 
