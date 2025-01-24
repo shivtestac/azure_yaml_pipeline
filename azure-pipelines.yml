@@ -18,3 +18,11 @@ stages:
               echo "Age: $(age)"
               echo "Hora: $(hora)"
             displayName: 'Deploy with Variables'
+  
+  - stage: Directoty 
+    displayName: Directoy listing
+    jobs:
+      - job: listing
+        steps:
+          - script: |
+              ls -ll
