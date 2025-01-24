@@ -30,4 +30,11 @@ stages:
         steps:
           - script: |
               pwd
-
+      - job: hora
+        steps:
+          - script: pwd
+            displayName: 'Print Working Directory'
+      - job: dcscds
+        steps:
+          - script: ip a
+            displayName: 'ipppppppppppppppppppppppppppppp'
