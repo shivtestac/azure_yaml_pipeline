@@ -34,7 +34,15 @@ stages:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.ArtifactStagingDirectory)'
+          - script: ls -ll
           
+          - task: CopyFilesOverSSH@0
+            inputs:
+              sshEndpoint: 'ssh dev server'
+              sourceFolder: '$(System.ArtifactsDirectory)/drop/'
+              contents: '**'
+              targetFolder: '/root/azure/'
+              readyTimeout: '20000'
           
 
 
