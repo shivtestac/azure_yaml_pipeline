@@ -26,3 +26,8 @@ stages:
         steps:
           - script: |
               ls -ll
+      - job: other
+        steps:
+          - script: |
+              pwd
+
