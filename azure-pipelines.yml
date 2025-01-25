@@ -22,7 +22,7 @@ stages:
 
           - script: |
               cd $(Build.ArtifactStagingDirectory)
-              zip -r build.zip build/*
+              zip -r build.zip build/* -j
               echo "ZIP file created: php-files.zip"
             displayName: Create ZIP File
           
@@ -83,7 +83,7 @@ stages:
               azureSubscription: 'Pay-As-You-Go(e0b04bb4-2704-41a6-894f-a1032232638a)'
               appType: 'webAppLinux'
               appName: 'fdfvdsffsdfsdfdsfdsfsdfdsfdsfdsfdsfsd'
-              package: '$(System.ArtifactsDirectory)/drop'
+              package: '$(System.ArtifactsDirectory)/drop/build.zip'
               runtimeStack: 'PHP|8.1'
 
 
