@@ -5,12 +5,12 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-- group: vg
 
 stages:
   - stage: Buiild
     displayName: Build Stage
+    variables:
+    - group: build
     jobs:
       - job: pubartifacet
         steps:
@@ -31,6 +31,8 @@ stages:
   
   - stage: Deploy 
     displayName: Deploying Server
+    variables:
+    - group: deploy
     jobs:
       - job: Deploy
         steps:
@@ -42,7 +44,7 @@ stages:
               artifactName: 'drop'
               downloadPath: "$(System.ArtifactsDirectory)/drop"
           
-          - script: 
+          - script: |
               pwd
               ls -ll
               echo "Artifact Staging Dir"
@@ -57,6 +59,8 @@ stages:
               contents: '**'
               targetFolder: '/root/azure/'
               readyTimeout: '20000'
+        
+           
           
   # - stage: AureAPP
   #   displayName: Azure app deployment
