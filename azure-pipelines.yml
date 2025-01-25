@@ -18,12 +18,20 @@ stages:
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'  # Root source directory
               Contents: '**/*.php'  # Match all PHP files
-              TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Target staging directory
+              TargetFolder: '$(Build.ArtifactStagingDirectory)/build'  # Target staging directory
+
+          - script: |
+              cd $(Build.ArtifactStagingDirectory)
+              zip -r build.zip build
+              echo "ZIP file created: php-files.zip"
+            displayName: Create ZIP File
+          
+
 
           # Publish the PHP files as build artifacts
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Publish from the staging directory
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/build.zip'  # Publish from the staging directory
               ArtifactName: 'drop'
               publishLocation: 'Container'
           - script: |
@@ -60,7 +68,7 @@ stages:
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'ssh dev server'
-              sourceFolder: "$(System.ArtifactsDirectory)/drop/*"
+              sourceFolder: "$(System.ArtifactsDirectory)/drop/"
               contents: '**'
               targetFolder: '/root/azure/'
               readyTimeout: '20000'
@@ -72,6 +80,13 @@ stages:
               commands: 'mkdir /root/azure/ggggggggggggggggggggggggg'
               readyTimeout: '20000'
           
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'Pay-As-You-Go(e0b04bb4-2704-41a6-894f-a1032232638a)'
+              appType: 'webAppLinux'
+              appName: 'fdfvdsffsdfsdfdsfdsfsdfdsfdsfdsfdsfsd'
+              package: '$(System.DefaultWorkingDirectory)/drop/build.zip'
+              runtimeStack: 'PHP|8.1'
   # - stage: AureAPP
   #   displayName: Azure app deployment
   #   jobs:
