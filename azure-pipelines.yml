@@ -65,7 +65,12 @@ stages:
               targetFolder: '/root/azure/'
               readyTimeout: '20000'
         
-           
+          - task: SSH@0
+            inputs:
+              sshEndpoint: 'ssh dev server'
+              runOptions: 'commands'
+              commands: 'mkdir /root/azure/ggggggggggggggggggggggggg'
+              readyTimeout: '20000'
           
   # - stage: AureAPP
   #   displayName: Azure app deployment
