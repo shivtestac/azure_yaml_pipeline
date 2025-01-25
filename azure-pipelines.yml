@@ -26,6 +26,8 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Publish from the staging directory
               ArtifactName: 'drop'
               publishLocation: 'Container'
+          - script: |
+              echo $(build)
     
       
   
@@ -45,6 +47,7 @@ stages:
               downloadPath: "$(System.ArtifactsDirectory)/drop"
           
           - script: |
+              echo $(deploy)
               pwd
               ls -ll
               echo "Artifact Staging Dir"
