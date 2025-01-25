@@ -65,7 +65,7 @@ stages:
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'ssh dev server'
-              sourceFolder: "$(System.ArtifactsDirectory)/drop/"
+              sourceFolder: "$(System.ArtifactsDirectory)/drop"
               contents: '**'
               targetFolder: '/root/azure/'
               readyTimeout: '20000'
@@ -74,7 +74,8 @@ stages:
             inputs:
               sshEndpoint: 'ssh dev server'
               runOptions: 'commands'
-              commands: 'mkdir /root/azure/ggggggggggggggggggggggggg'
+              commands: ls -ll
+              #commands: 'mkdir /root/azure/ggggggggggggggggggggggggg'
               readyTimeout: '20000'
           
           - task: AzureWebApp@1
@@ -82,14 +83,8 @@ stages:
               azureSubscription: 'Pay-As-You-Go(e0b04bb4-2704-41a6-894f-a1032232638a)'
               appType: 'webAppLinux'
               appName: 'fdfvdsffsdfsdfdsfdsfsdfdsfdsfdsfdsfsd'
-              package: '$(System.ArtifactsDirectory)/drop/build.zip'
+              package: '$(System.ArtifactsDirectory)/drop'
               runtimeStack: 'PHP|8.1'
-  # - stage: AureAPP
-  #   displayName: Azure app deployment
-  #   jobs:
-  #     - job: azureaapp
-  #       steps:
-  #         - checkout: none
-          
+
 
 
