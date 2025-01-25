@@ -58,12 +58,12 @@ stages:
               targetFolder: '/root/azure/'
               readyTimeout: '20000'
           
-  - stage: AureAPP
-    displayName: Azure app deployment
-    jobs:
-      - job: azureaapp
-        steps:
-          - checkout: none
+  # - stage: AureAPP
+  #   displayName: Azure app deployment
+  #   jobs:
+  #     - job: azureaapp
+  #       steps:
+  #         - checkout: none
           
 
 
