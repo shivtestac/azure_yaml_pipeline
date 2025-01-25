@@ -10,14 +10,14 @@ variables:
 
 stages:
   - stage: Buiild
-    displayName: Deploy Stage
+    displayName: Build Stage
     jobs:
       - job: pubartifacet
         steps:
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'  # Root source directory
-              Contents: '*.php'  # Match all PHP files
+              Contents: '**/*.php'  # Match all PHP files
               TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Target staging directory
 
           # Publish the PHP files as build artifacts
@@ -57,6 +57,13 @@ stages:
               contents: '**'
               targetFolder: '/root/azure/'
               readyTimeout: '20000'
+          
+  - stage: AureAPP
+    displayName: Azure app deployment
+    jobs:
+      - job: azureaapp
+        steps:
+          - checkout: none
           
 
 
