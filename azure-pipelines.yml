@@ -9,21 +9,28 @@ variables:
 - group: vg
 
 stages:
-  - stage: Deploy
+  - stage: Buiild
     displayName: Deploy Stage
     jobs:
       - job: pubartifacet
         steps:
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'  # Root source directory
+              Contents: '**/*.php'  # Match all PHP files
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Target staging directory
+
+          # Publish the PHP files as build artifacts
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.SourcesDirectory)/index.php'
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Publish from the staging directory
               ArtifactName: 'drop'
               publishLocation: 'Container'
     
       
   
-  - stage: Directoty 
-    displayName: Directoy listing
+  - stage: Deploy 
+    displayName: Deploying Server
     jobs:
       - job: Deploy
         steps:
