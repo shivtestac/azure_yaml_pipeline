@@ -22,7 +22,7 @@ stages:
 
           - script: |
               cd $(Build.ArtifactStagingDirectory)
-              zip -r build.zip build
+              zip -r build.zip build/*
               echo "ZIP file created: php-files.zip"
             displayName: Create ZIP File
           
