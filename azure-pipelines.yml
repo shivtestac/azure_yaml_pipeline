@@ -18,6 +18,7 @@ stages:
           - checkout: self
           - script: |
               echo "Checking out the correct branch"
+              git fetch --all
               if [ "$(Build.SourceBranchName)" == "main" ]; then
                 git checkout main
               elif [ "$(Build.SourceBranchName)" == "dev" ]; then
