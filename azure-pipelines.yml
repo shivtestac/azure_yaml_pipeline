@@ -17,7 +17,7 @@ stages:
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'  # Root source directory
-              Contents: '**/*.php'  # Match all PHP files
+              Contents: '*.php'  # Match all PHP files
               TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Target staging directory
 
           # Publish the PHP files as build artifacts
