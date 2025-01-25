@@ -15,7 +15,7 @@ stages:
     jobs:
       - job: pubartifacet
         steps:
-          - checkout: none
+          - checkout: self
           - script: |
               echo "Checking out the correct branch"
               if [ "$(Build.SourceBranchName)" == "main" ]; then
