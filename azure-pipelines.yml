@@ -34,8 +34,7 @@ stages:
               buildType: 'current'
               downloadType: 'single'
               artifactName: 'drop'
-              downloadPath: "$(System.ArtifactStagingDirectory)"
-          - script: ls -ll
+              downloadPath: "$(System.ArtifactStagingDirectory)/drop"
           
           - task: CopyFilesOverSSH@0
             inputs:
