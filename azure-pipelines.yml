@@ -1,6 +1,7 @@
 
 trigger:
 - main
+- dev
 
 pool:
   vmImage: ubuntu-latest
@@ -40,12 +41,13 @@ stages:
     
       
   
-  - stage: Deploy 
-    displayName: Deploying Server
+  - stage: DeployProd 
+    displayName: Deploying Prod server
     variables:
     - group: deploy
     jobs:
       - job: Deploy
+        condition:  and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
         steps:
           - checkout: none
           - task: DownloadBuildArtifacts@1
@@ -87,3 +89,56 @@ stages:
 
 
 
+  - stage: DeployDev 
+    displayName: Deploying Dev server
+    variables:
+    - group: deploy
+    jobs:
+      - job: Deploy
+        condition:  and(succeeded(), eq(variables['Build.SourceBranchName'], 'dev'))
+        steps:
+          - checkout: none
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: "$(System.ArtifactsDirectory)/drop"
+          
+          - script: |
+              echo "build var is $(build)"
+              echo "deploy var is $(deploy)"
+              pwd
+              ls -ll $(System.ArtifactsDirectory)
+
+          
+          - task: CopyFilesOverSSH@0
+            inputs:
+              sshEndpoint: 'ssh dev server'
+              sourceFolder: "$(System.ArtifactsDirectory)/drop"
+              contents: '**'
+              targetFolder: '/root/azure/'
+              readyTimeout: '20000'
+        
+          - task: SSH@0
+            inputs:
+              sshEndpoint: 'ssh dev server'
+              runOptions: 'commands'
+              commands: ls -ll
+              #commands: 'mkdir /root/azure/ggggggggggggggggggggggggg'
+              readyTimeout: '20000'
+
+          
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'Pay-As-You-Go(e0b04bb4-2704-41a6-894f-a1032232638a)'
+              appType: 'webAppLinux'
+              appName: 'fdfvdsffsdfsdfdsfdsfsdfdsfdsfdsfdsfsd'
+              deployToSlotOrASE: true
+              resourceGroupName: 'buepapmpi'
+              slotName: 'dev'
+              package: '$(System.ArtifactsDirectory)/**/*.zip'
+          
+
+          
