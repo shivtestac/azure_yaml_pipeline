@@ -15,6 +15,19 @@ stages:
     jobs:
       - job: pubartifacet
         steps:
+          - checkout: none
+          - script: |
+              echo "Checking out the correct branch"
+              if [ "$(Build.SourceBranchName)" == "main" ]; then
+                git checkout main
+              elif [ "$(Build.SourceBranchName)" == "dev" ]; then
+                git checkout dev
+              elif [ "$(Build.SourceBranchName)" == "test" ]; then
+                git checkout test
+              fi
+            displayName: Checkout Correct Branch
+          
+          
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'  # Root source directory
