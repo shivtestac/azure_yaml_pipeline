@@ -1,1 +1,3 @@
-Hello How are Aure Pipleline from yaml file.
+<?php
+phpinfo()
+?>
