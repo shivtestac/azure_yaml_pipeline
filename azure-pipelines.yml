@@ -19,8 +19,6 @@ stages:
               PathtoPublish: '$(Build.SourcesDirectory)'
               ArtifactName: 'drop'
               publishLocation: 'Container'
-
-          - script: ip a
     
       
   
@@ -34,7 +32,15 @@ stages:
               buildType: 'current'
               downloadType: 'single'
               artifactName: 'drop'
-              downloadPath: "$(System.ArtifactStagingDirectory)/drop"
+              downloadPath: "$(System.ArtifactsDirectory)/drop"
+          
+          - script: 
+              pwd
+              ls -ll
+              echo "Artifact Staging Dir"
+              ls -ll $(System.ArtifactStagingDirectory)
+              echo "Artifact Directory"
+              ls -ll $(System.ArtifactsDirectory)
           
           - task: CopyFilesOverSSH@0
             inputs:
