@@ -60,10 +60,7 @@ stages:
               echo "deploy var is $(deploy)"
               pwd
               ls -ll
-              echo "Artifact Staging Dir"
-              ls -ll $(System.ArtifactStagingDirectory)
-              echo "Artifact Directory"
-              ls -ll $(System.ArtifactsDirectory)
+
           
           - task: CopyFilesOverSSH@0
             inputs:
@@ -85,7 +82,7 @@ stages:
               azureSubscription: 'Pay-As-You-Go(e0b04bb4-2704-41a6-894f-a1032232638a)'
               appType: 'webAppLinux'
               appName: 'fdfvdsffsdfsdfdsfdsfsdfdsfdsfdsfdsfsd'
-              package: '$(System.DefaultWorkingDirectory)/drop/build.zip'
+              package: '$(System.ArtifactsDirectory)/drop/build.zip'
               runtimeStack: 'PHP|8.1'
   # - stage: AureAPP
   #   displayName: Azure app deployment
