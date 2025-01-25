@@ -16,7 +16,7 @@ stages:
         steps:
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.SourcesDirectory)/*.php'
+              PathtoPublish: '$(Build.SourcesDirectory)/**/*.php'
               ArtifactName: 'drop'
               publishLocation: 'Container'
     
