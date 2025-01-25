@@ -27,7 +27,8 @@ stages:
               ArtifactName: 'drop'
               publishLocation: 'Container'
           - script: |
-              echo $(build)
+              echo "build var is $(build)"
+              echo "deploy var is $(deploy)"
     
       
   
@@ -47,7 +48,8 @@ stages:
               downloadPath: "$(System.ArtifactsDirectory)/drop"
           
           - script: |
-              echo $(deploy)
+              echo "build var is $(build)"
+              echo "deploy var is $(deploy)"
               pwd
               ls -ll
               echo "Artifact Staging Dir"
